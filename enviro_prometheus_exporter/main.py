@@ -544,5 +544,6 @@ def main(bind, port, debug, version, pms, enviro, luftdaten, influxdb, factor):
         if debug:
             logging.info(f"Sensor data: {collect_all_data()}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
