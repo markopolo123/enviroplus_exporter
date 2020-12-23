@@ -458,7 +458,7 @@ def get_serial_number():
     "-f",
     default=0,
     type=float,
-    help="Factor to compensate temp [default: 2.25]",
+    help="Factor to compensate temp [default: 0]",
 )
 @click.option(
     "--debug",

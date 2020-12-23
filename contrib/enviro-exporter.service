@@ -5,8 +5,7 @@ After=network.target
 [Service]
 User=pi
 Group=pi
-WorkingDirectory=/home/pi/enviro_exporter
-ExecStart=/home/pi/enviro_exporter/.venv/bin/python /home/pi/enviro_exporter/.venv/bin/enviro-exporter --port=8003
+ExecStart=/python3 enviro-exporter --port=8003
 ExecReload=/bin/kill -HUP $MAINPID
 Environment="INFLUXDB_TIME_BETWEEN_POSTS=10"
 

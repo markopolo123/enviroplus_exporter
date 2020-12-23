@@ -1,13 +1,14 @@
 <!--
 *** Thanks for checking out this README Template. If you have a suggestion that would
-*** make this better, please fork the enviroplus_exporter and create a pull request or simply open
+*** make this better, please fork the enviro_exporter and create a pull request or simply open
+
 *** an issue with the tag "enhancement".
 *** Thanks again! Now go create something AMAZING! :D
 ***
 ***
 ***
 *** To avoid retyping too much info. Do a search and replace for the following:
-*** tijmenvandenbrink, enviroplus_exporter, tijmenvdbrink, email
+*** tijmenvandenbrink, enviro_exporter, tijmenvdbrink, email
 -->
 
 
@@ -29,23 +30,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/tijmenvandenbrink/enviroplus_exporter">
+  <a href="https://github.com/tijmenvandenbrink/enviro_exporter">
     <img src="logo/logo.png" alt="Logo" width="160" height="160">
   </a>
 
-  <h3 align="center">Enviroplus-exporter</h3>
+  <h3 align="center">Enviro-exporter</h3>
 
   <p align="center">
-    Prometheus exporter for enviroplus module by Pimoroni
+    Prometheus exporter for enviro module by Pimoroni
     <br />
-    <a href="https://github.com/tijmenvandenbrink/enviroplus_exporter"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/tijmenvandenbrink/enviro_exporter"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/tijmenvandenbrink/enviroplus_exporter">View Demo</a>
+    <a href="https://github.com/tijmenvandenbrink/enviro_exporter">View Demo</a>
     ·
-    <a href="https://github.com/tijmenvandenbrink/enviroplus_exporter/issues">Report Bug</a>
+    <a href="https://github.com/tijmenvandenbrink/enviro_exporter/issues">Report Bug</a>
     ·
-    <a href="https://github.com/tijmenvandenbrink/enviroplus_exporter/issues">Request Feature</a>
+    <a href="https://github.com/tijmenvandenbrink/enviro_exporter/issues">Request Feature</a>
   </p>
 </p>
 
@@ -71,11 +72,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/tijmenvandenbrink/enviroplus_exporter)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/tijmenvandenbrink/enviro_exporter)
 
 ### Built With
 
-* [Pimoroni/enviroplus-python](https://github.com/pimoroni/enviroplus-python)
+* [Pimoroni/enviro-python](https://github.com/pimoroni/enviro-python)
 * [Prometheus](https://prometheus.io/)
 * [Grafana](https://grafana.com/)
 
@@ -83,85 +84,107 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get the prometheus enviroplus-exporter up and running I'm assuming you already have Prometheus and Grafana running somewhere. 
+To get the prometheus enviro-exporter up and running I'm assuming you already have Prometheus and Grafana running somewhere. 
 ***Note***: I wouldn't recommend running Prometheus on a Raspberry Pi (using a local SD card) as this could drastically reduce the lifetime of the SD card as samples are written quite often to disk.
 
 ### Prerequisites
 
 - Python3
-- To run the enviroplus-exporter you need to have the enviroplus-python library by Pimoroni installed:
+- To run the enviro-exporter you need to have the enviro-python library by Pimoroni installed:
  
-### One-line (Installs enviroplus-python library from GitHub)
+### One-line (Installs enviro-python library from GitHub)
 
 ```sh
-curl -sSL https://get.pimoroni.com/enviroplus | bash
+curl -sSL https://get.pimoroni.com/enviro | bash
 ```
 
-**Note** Raspbian Lite users may first need to install git: `sudo apt install git`
+**Note** Raspbian Lite users may first need to install git: `sudo apt install git curl`
 
 ### Installation
-We're going to run the enviroplus-exporter as the user ```pi``` in the directory ```/usr/src/```. Adjust this as you wish.
  
-1.Clone the enviroplus-exporter repository
+1.Install the package from pypi
 ```sh
-cd
-git clone https://github.com/tijmenvandenbrink/enviroplus_exporter.git
-sudo cp -r enviroplus_exporter /usr/src/
-sudo chown -R pi:pi /usr/src/enviroplus_exporter
-```
-
-2.Install dependencies for enviroplus-exporter
-```sh
-pip3 install -r requirements.txt
+pip3 install enviro_prometheus_exporter
 ```
 
 3.Install as a Systemd service
 ```sh
-cd /usr/src/enviroplus_exporter
-sudo cp contrib/enviroplus-exporter.service /etc/systemd/system/enviroplus-exporter.service
-sudo chmod 644 /etc/systemd/system/enviroplus-exporter.service
+SERVICE_FILE=https://raw.githubusercontent.com/tijmenvandenbrink/enviro_exporter/master/contrib/enviro-exporter.service
+sudo curl ${SERVICE_FILE} -o /etc/systemd/system/enviro-exporter.service
+sudo chmod 644 /etc/systemd/system/enviro-exporter.service
 sudo systemctl daemon-reload
 ```
-4.Start the enviroplus-exporter service
+4.Start the enviro-exporter service
 ```sh
-sudo systemctl start enviroplus-exporter
+sudo systemctl start enviro-exporter
 ```
 5.Check the status of the service
 ```sh
-sudo systemctl status enviroplus-exporter
+sudo systemctl status enviro-exporter
 ```
 If the service is running correctly, the output should resemble the following:
 
 ```
-pi@raspberrypi:/usr/src/enviroplus_exporter $ sudo systemctl status enviroplus-exporter
-● enviroplus-exporter.service - Enviroplus-exporter service
-   Loaded: loaded (/etc/systemd/system/enviroplus-exporter.service; disabled; vendor preset: enabled)
+pi@raspberrypi:/usr/src/enviro_exporter $ sudo systemctl status enviro-exporter
+● enviro-exporter.service - Enviro-exporter service
+   Loaded: loaded (/etc/systemd/system/enviro-exporter.service; disabled; vendor preset: enabled)
    Active: active (running) since Fri 2020-01-17 14:13:41 CET; 5s ago
  Main PID: 30373 (python)
     Tasks: 2 (limit: 4915)
    Memory: 6.0M
-   CGroup: /system.slice/enviroplus-exporter.service
-           └─30373 /usr/bin/python /usr/src/enviroplus_exporter/enviroplus_exporter.py --bind=0.0.0.0 --port=8000
+   CGroup: /system.slice/enviro-exporter.service
+           └─30373 /usr/bin/python /usr/src/enviro_exporter/enviro_exporter.py --bind=0.0.0.0 --port=8000
 
-Jan 17 14:13:41 wall-e systemd[1]: Started Enviroplus-exporter service.
-Jan 17 14:13:41 wall-e python[30373]: 2020-01-17 14:13:41.565 INFO     enviroplus_exporter.py - Expose readings from the Enviro+ sensor by Pimoroni in Prometheus format
+Jan 17 14:13:41 wall-e systemd[1]: Started Enviro-exporter service.
+Jan 17 14:13:41 wall-e python[30373]: 2020-01-17 14:13:41.565 INFO     enviro_exporter.py - Expose readings from the Enviro+ sensor by Pimoroni in Prometheus format
 Jan 17 14:13:41 wall-e python[30373]: Press Ctrl+C to exit!
 Jan 17 14:13:41 wall-e python[30373]: 2020-01-17 14:13:41.581 INFO     Listening on http://0.0.0.0:8000
 ```
 
 6.Enable at boot time
 ```sh
-sudo systemctl enable enviroplus-exporter
+sudo systemctl enable enviro-exporter
 ```
+### Usage
+
+eviro-exporter --help for a list of available flags and options:
+
+```sh
+
+Usage: enviro-exporter [OPTIONS]
+
+Options:
+  -b, --bind TEXT     Specify alternate bind address [default: 0.0.0.0]
+  -p, --port INTEGER  Specify alternate port [default: 8000]
+  -f, --factor FLOAT  Factor to compensate temp [default: 2.25]
+  -d, --debug         Turns on more verbose logging, prints output [default:
+                      False]
+
+  -i, --influxdb      Post sensor data to InfluxDB [default: False]
+  -l, --luftdaten     Post sensor data to InfluxDB [default: False]
+  -e, --enviro        Set this if you have an Enviro (not Enviro+) so don't
+                      have gas and particulate sensors
+
+  -s, --pms           Enable pms5003 data collection [default: False]
+  -v, --version       Prints version number and exits [default: False]
+  --help              Show this message and exit.
+
+```
+
+
+## I don't have a pms!
+
+Add the flag `--pms` to your run command if you don't have a pms. This will stop
+particulate data collection.
 
 ## Enviro users
 
-If you are using an Enviro (not Enviro+) add `--enviro=true` to the command line (in the `/etc/systemd/system/enviroplus-exporter.service` file) then it won't try to use the missing sensors.
+If you are using an Enviro (not Enviro+) add `--enviro` to the command line (in the `/etc/systemd/system/enviro-exporter.service` file) then it won't try to use the missing sensors.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-So now we've setup the Prometheus enviroplus-exporter we can start scraping this endpoint from our Prometheus server and get a nice dashboard using Grafana.  
+So now we've setup the Prometheus enviro-exporter we can start scraping this endpoint from our Prometheus server and get a nice dashboard using Grafana.  
 
 ### Prometheus
 
@@ -209,7 +232,7 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9100']
 
-    # If environmentplus-exporter is installed, grab stats about the local
+    # If environment-exporter is installed, grab stats about the local
     # machine by default.
   - job_name: environment
     static_configs:
@@ -245,16 +268,16 @@ There is a Dockerfile available if you'd like to run as a docker container.
 
 1.Building
 
-```docker build -t enviroplus-exporter .```
+```docker build -t enviro-exporter .```
 
 2.Running
 
-```docker run -d enviroplus-exporter -d -p 8000:8000 --device=/dev/i2c-1 --device=/dev/gpiomem --device=/dev/ttyAMA0 enviroplus-exporter```
+```docker run -d enviro-exporter -d -p 8000:8000 --device=/dev/i2c-1 --device=/dev/gpiomem --device=/dev/ttyAMA0 enviro-exporter```
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/tijmenvandenbrink/enviroplus_exporter/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/tijmenvandenbrink/enviro_exporter/issues) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTING -->
@@ -282,16 +305,16 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/tijmenvandenbrink/enviroplus-exporter
-[contributors-url]: https://github.com/tijmenvandenbrink/enviroplus_exporter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/tijmenvandenbrink/enviroplus-exporter?label=Fork
-[forks-url]: https://github.com/tijmenvandenbrink/enviroplus_exporter/network/members
-[stars-shield]: https://img.shields.io/github/stars/tijmenvandenbrink/enviroplus-exporter
-[stars-url]: https://github.com/tijmenvandenbrink/enviroplus_exporter/stargazers
-[issues-shield]: https://img.shields.io/github/issues-raw/tijmenvandenbrink/enviroplus-exporter
-[issues-url]: https://github.com/tijmenvandenbrink/enviroplus_exporter/issues
-[license-shield]: https://img.shields.io/github/license/tijmenvandenbrink/enviroplus-exporter
-[license-url]: https://github.com/tijmenvandenbrink/enviroplus_exporter/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/tijmenvandenbrink/enviro-exporter
+[contributors-url]: https://github.com/tijmenvandenbrink/enviro_exporter/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/tijmenvandenbrink/enviro-exporter?label=Fork
+[forks-url]: https://github.com/tijmenvandenbrink/enviro_exporter/network/members
+[stars-shield]: https://img.shields.io/github/stars/tijmenvandenbrink/enviro-exporter
+[stars-url]: https://github.com/tijmenvandenbrink/enviro_exporter/stargazers
+[issues-shield]: https://img.shields.io/github/issues-raw/tijmenvandenbrink/enviro-exporter
+[issues-url]: https://github.com/tijmenvandenbrink/enviro_exporter/issues
+[license-shield]: https://img.shields.io/github/license/tijmenvandenbrink/enviro-exporter
+[license-url]: https://github.com/tijmenvandenbrink/enviro_exporter/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/tijmenvandenbrink
 [product-screenshot]: images/screenshot.png
