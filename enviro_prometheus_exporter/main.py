@@ -37,7 +37,7 @@ logging.basicConfig(
 )
 
 logging.info(
-    """enviroplus_exporter.py - Expose readings from the Enviro+ sensor by Pimoroni in Prometheus format
+    """enviroplus-exporter - Expose readings from the Enviro+ sensor by Pimoroni in Prometheus format
 
 Press Ctrl+C to exit!
 
