@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  setup:
+    cmds:
+      - 
+
+  build:
+    cmds:
+      - poetry build
+
+  publish:
+    deps:
+      - task: build
+    cmds:
+      - poetry publish -u {{.PYPI_USERNAME}} -p {{.PYPI_PASSWORD}} 
+    vars:
+      PYPI_USERNAME: $PYPI_USERNAME
+      PYPI_USERNAME: $PYPI_PASSWORD
